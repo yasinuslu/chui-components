@@ -1,0 +1,8 @@
+{
+  "packages": {
+    "chui-router": {
+      "path": "../"
+    },
+    "iron-router": {}
+  }
+}

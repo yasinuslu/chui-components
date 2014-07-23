@@ -1,0 +1,13 @@
+{
+  "name": "chui-router",
+  "description": "Integrates chui with iron-router",
+  "author": "Yasin Uslu",
+  "version": "0.0.1",
+  "homepage": "https://github.com/yasinuslu/chui-router",
+  "git": "https://github.com/yasinuslu/chui-router.git",
+  "packages": {
+    "chui-latest": {
+      "path": "../chui-latest"
+    }
+  }
+}

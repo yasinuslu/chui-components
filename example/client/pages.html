@@ -1,0 +1,51 @@
+<head>
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+</head>
+
+<template name="MasterLayout">
+  <div class="next-page">
+    {{> yield }}
+  </div>
+</template>
+
+<template name="First">
+  <nav class="">
+    <h1>First Page</h1>
+  </nav>
+  <article class="">
+    <section>
+      <ul class='list'>
+        <li data-goto="{{pathFor 'second'}}" class="nav"><a>Second</a></li>
+      </ul>
+    </section>
+  </article>
+</template>
+
+<template name="Second">
+  <nav class="">
+    <a data-back="{{pathFor 'first'}}" class='button back'>First</a>
+    <h1>Second Page</h1>
+  </nav>
+  <article class="">
+    <section>
+      <ul class='list'>
+        <li data-goto="{{pathFor 'third'}}" class="nav"><a>Third</a></li>
+      </ul>
+    </section>
+  </article>
+</template>
+
+<template name="Third">
+  <nav class="">
+    <a data-back="{{pathFor 'second'}}" class='button back'>Second</a>
+    <h1>Third Page</h1>
+  </nav>
+  <article class="">
+    <section>
+      <ul class='list'>
+        <li data-goto="{{pathFor 'first'}}" class="nav"><a>First</a></li>
+      </ul>
+    </section>
+  </article>
+</template>
