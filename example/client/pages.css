@@ -1,7 +1,7 @@
-.next-page {
+#next-page {
   display: none;
 }
 
-.next-page.visible {
+#next-page.visible {
   display: block;
 }

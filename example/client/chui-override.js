@@ -5,11 +5,11 @@ var $nextPage;
 
 var movePage = function() {
   if (!$tempPage) {
-    $tempPage = $('<div>').addClass('temp-page').appendTo('body');
+    $tempPage = $('<div>').attr('id', 'temp-page').appendTo('body');
   }
 
   if (!$nextPage) {
-    $nextPage = $('.next-page');
+    $nextPage = $('#next-page');
   }
 
   $tempPage.empty().append($('.current'));
@@ -22,8 +22,8 @@ $.UIGo = function() {
   var current = $('article.current');
   var currentNav = current.prev();
 
-  var destination = $nextPage.find('article');
-  var destinationNav = $nextPage.find('nav');
+  var destination = $('#next-page').find('article');
+  var destinationNav = $('#next-page').find('nav');
 
   var currentToolbar;
   var destinationToolbar;
@@ -85,7 +85,6 @@ Router.onAfterAction(function() {
     });
   });
 });
-
 
 $._UIGoBack = $.UIGoBack;
 

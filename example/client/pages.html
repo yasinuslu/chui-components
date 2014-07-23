@@ -4,9 +4,9 @@
 </head>
 
 <template name="MasterLayout">
-  <div class="next-page">
+  {{#RoutingHelper}}
     {{> yield }}
-  </div>
+  {{/RoutingHelper}}
 </template>
 
 <template name="First">
