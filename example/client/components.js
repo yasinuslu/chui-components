@@ -27,7 +27,7 @@
 
 */
 
-var DEBUG = true;
+var DEBUG = false;
 
 var debugLog = function( /* same as console.log */ ) {
   if (!DEBUG) return;
@@ -104,9 +104,17 @@ var commonInit = function() {
     // seems like it's working but there is something weird going on !!!
     var navState = navDict.get('navState');
 
-    if (navState !== NOT_NAVIGATING && isRendered) {
+    if (!isRendered || animState === REMOVING) {
+      return;
+    }
+
+    if (navState !== NOT_NAVIGATING) {
       // we're navigating so this view is doomed !!!
       self.setAnimState(REMOVING);
+
+      // I actually wanted to solve all class transitions with viewStateClass helper
+      // but as soon as user navigates away, our helpers isn't getting called anymore
+      // even if we insert it using UI.insert
 
       // UI.insert(self, tempView.templateInstance.firstNode);
 
@@ -115,21 +123,18 @@ var commonInit = function() {
 
       $tempPage.append($el);
 
-      setTimeout(function() {
+      // transitionEnd event doesnt get fired so we'll use setTimeout until we figure out why
+      Meteor.setTimeout(function() {
         navDict.set('navState', NOT_NAVIGATING);
-        self.destroy();
-
         $tempPage.empty();
-
-        self = null;
       }, 300);
 
       $el
-        .on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function() {
-          debugLog('animation finished');
-          navDict.set('navState', NOT_NAVIGATING);
-        })
-        .removeClass('current')
+      // .one('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function() {
+      //   debugLog('animation finished');
+      //   navDict.set('navState', NOT_NAVIGATING);
+      // })
+      .removeClass('current')
         .addClass(self.viewStateClass());
     }
   });
@@ -142,6 +147,11 @@ var commonInit = function() {
 
 var commonDestroy = function() {
   debugLog('destroyed: ', self.kind, self.guid);
+
+  if (navDict.get('navState') === NOT_NAVIGATING) {
+    // If any routing happens without $.UIGo
+    navDict.set('navState', GOING_FORWARD);
+  }
 
   if (self._computation) {
     self._computation.stop();
