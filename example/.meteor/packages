@@ -7,6 +7,5 @@ standard-app-packages
 autopublish
 insecure
 chui-latest
-chui-router
 iron-router
-reactive-dict
+chui-components

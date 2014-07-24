@@ -1,10 +1,10 @@
 {
-  "name": "chui-router",
-  "description": "Integrates chui with iron-router",
+  "name": "chui-components",
+  "description": "Seamless ChocolateChip-UI integration for meteor",
   "author": "Yasin Uslu",
   "version": "0.0.1",
-  "homepage": "https://github.com/yasinuslu/chui-router",
-  "git": "https://github.com/yasinuslu/chui-router.git",
+  "homepage": "https://github.com/yasinuslu/chui-components",
+  "git": "https://github.com/yasinuslu/chui-components.git",
   "packages": {
     "chui-latest": {
       "path": "../chui-latest"

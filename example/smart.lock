@@ -2,13 +2,13 @@
   "meteor": {},
   "dependencies": {
     "basePackages": {
-      "chui-router": {
+      "chui-components": {
         "path": ".."
       },
       "iron-router": {}
     },
     "packages": {
-      "chui-router": {
+      "chui-components": {
         "path": ".."
       },
       "iron-router": {

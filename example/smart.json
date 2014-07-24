@@ -1,6 +1,6 @@
 {
   "packages": {
-    "chui-router": {
+    "chui-components": {
       "path": "../"
     },
     "iron-router": {}
