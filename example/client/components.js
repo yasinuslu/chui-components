@@ -40,14 +40,13 @@ var GOING_BACK = 0,
   NOT_NAVIGATING = 2;
 
 // component's life cycle
-var RENDERING = 0,
-  RENDERED = 1,
-  REMOVING = 2;
+var ADDING = 0,
+  REMOVING = 1;
 
 
 // state map for debugging
 var navStateMap = ['going-back', 'going-forward', 'not-navigating'];
-var renderStateMap = ['rendering', 'rendered', 'removing'];
+var animStateMap = ['adding', 'removing'];
 
 var navDict = new ReactiveDict;
 navDict.set('navState', NOT_NAVIGATING);
@@ -56,39 +55,17 @@ var tempView;
 
 var viewStateClass = function(comp) {
   return function() {
-    var renderState = comp.dict.get('renderState');
+    var animState = comp.dict.get('animState');
+    var isRendered = comp.dict.get('isRendered');
     var navState = navDict.get('navState');
 
-    // TODO: find a better logic for readability
-    debugLog(navStateMap[navState], ':', renderStateMap[renderState], comp.kind, comp.guid);
-    // if (navState === NOT_NAVIGATING) {
-    //   // we're not navigating currently
-    //   return 'current';
-    // } else if (navState === GOING_FORWARD) {
-    //   // we're going forward
-    //   if (renderState === RENDERING) {
-    //     // this view will be next view
-    //     return 'next';
-    //   } else {
-    //     // we're removing this view it's our previous view
-    //     return 'previous';
-    //   }
-    // } else {
-    //   // we're going back
-    //   if (renderState === RENDERING) {
-    //     // we just rendered this but user thinks it's our old view so it's coming from previous
-    //     return 'previous';
-    //   } else {
-    //     return 'next';
-    //   }
-    // }
-
-    if(renderState === RENDERED || navState === NOT_NAVIGATING) {
-      return 'current';
-    } else if(renderState === RENDERING) {
-      return navState === GOING_FORWARD ? 'previous' : 'next';
-    } else if(renderState === REMOVING) {
+    debugLog(navStateMap[navState], ':', animStateMap[animState], comp.kind, comp.guid);
+    if (animState === REMOVING) {
       return navState === GOING_BACK ? 'next' : 'previous';
+    } else if (isRendered && navState !== NOT_NAVIGATING || navState === NOT_NAVIGATING) {
+      return 'current';
+    } else {
+      return navState === GOING_FORWARD ? 'next' : 'previous';
     }
 
     // I hope i got it right, it will be my nightmare if i didn't !!!!
@@ -99,19 +76,27 @@ var commonInit = function() {
   var self = this;
   self.dict = new ReactiveDict;
 
-  // this is where we get renderState without reactivity
-  var renderState;
+  // this is where we get animState without reactivity
+  var animState;
+  var isRendered = false;
+  self.dict.set('isRendered', isRendered);
 
-  var setRenderState = function(state) {
-    debugLog('setting renderState:', renderStateMap[state], self.kind, self.guid);
-    renderState = state;
-    self.dict.set('renderState', state);
+  self.setAnimState = function(state) {
+    if (animState === state) {
+      return;
+    }
+    debugLog('setting animState:', animStateMap[state], self.kind, self.guid);
+    animState = state;
+    self.dict.set('animState', state);
   };
 
-  setRenderState(RENDERING);
+  self.setAnimState(ADDING);
 
   self.rendered = function() {
-    setRenderState(RENDERED);
+    isRendered = true;
+    Meteor.defer(function() {
+      self.dict.set('isRendered', isRendered);
+    });
   };
 
   self._computation = Deps.autorun(function() {
@@ -119,32 +104,34 @@ var commonInit = function() {
     // seems like it's working but there is something weird going on !!!
     var navState = navDict.get('navState');
 
-    if (navState !== NOT_NAVIGATING && renderState === RENDERED) {
+    if (navState !== NOT_NAVIGATING && isRendered) {
       // we're navigating so this view is doomed !!!
-      setRenderState(REMOVING);
+      self.setAnimState(REMOVING);
 
-      UI.insert(self, tempView.templateInstance.firstNode);
+      // UI.insert(self, tempView.templateInstance.firstNode);
+
       var $el = $(self.templateInstance.firstNode);
       var $tempPage = $(tempView.templateInstance.firstNode);
 
       $tempPage.append($el);
 
+      setTimeout(function() {
+        navDict.set('navState', NOT_NAVIGATING);
+        self.destroy();
+
+        $tempPage.empty();
+
+        self = null;
+      }, 300);
+
       $el
         .on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function() {
           debugLog('animation finished');
+          navDict.set('navState', NOT_NAVIGATING);
         })
         .removeClass('current')
         .addClass(self.viewStateClass());
     }
-
-    Deps.onInvalidate(function() {
-      debugLog('invalidate:', self.kind, self.guid);
-
-
-
-
-      // TODO: destroy component after webkit animation finished
-    });
   });
 
   // generate our viewStateClass fn with this comp
