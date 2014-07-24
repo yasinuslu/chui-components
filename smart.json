@@ -2,7 +2,7 @@
   "name": "chui-components",
   "description": "Seamless ChocolateChip-UI integration for meteor",
   "author": "Yasin Uslu",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "homepage": "https://github.com/yasinuslu/chui-components",
   "git": "https://github.com/yasinuslu/chui-components.git",
   "packages": {
