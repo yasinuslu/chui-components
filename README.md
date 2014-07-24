@@ -2,6 +2,8 @@
 
 ---
 A components collection that seamlessly integrates [ChocolateChip-UI](http://chocolatechip-ui.com/) with meteor.
+
+#### http://chui-components.meteor.com/
 	
 ---
 ## Installation
