@@ -1,9 +1,13 @@
 # CHUI Components
 
 ---
+Finally there is a Mobile UI Framework that plays nicely with meteor after a few tweaks. This package aims to implement those tweaks. Currently there isn't any known important issues. You're welcome to open issues.
+
 A components collection that seamlessly integrates [ChocolateChip-UI](http://chocolatechip-ui.com/) with meteor.
 
 #### http://chui-components.meteor.com/
+
+It's not all, try with different devices (Android, iOS, Windows) to see the real magic of ChocolateChip-UI.
 	
 ---
 ## Installation
