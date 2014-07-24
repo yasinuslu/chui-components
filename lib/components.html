@@ -1,17 +1,17 @@
 <template name="CHUI_Article">
-  <article class="{{viewStateClass}}">
+  <article id="{{divId}}" class="{{viewStateClass}} {{extraClasses}}">
     {{> UI.contentBlock}}
   </article>
 </template>
 
 <template name="CHUI_Nav">
-  <nav class="{{viewStateClass}}">
+  <nav id="{{divId}}" class="{{viewStateClass}} {{extraClasses}}">
     {{> UI.contentBlock}}
   </nav>
 </template>
 
 <template name="CHUI_Toolbar">
-  <div class="toolbar {{viewStateClass}}">
+  <div id="{{divId}}" class="toolbar {{viewStateClass}} {{extraClasses}}">
     {{> UI.contentBlock}}
   </div>
 </template>

@@ -7,15 +7,15 @@ Router.configure({
 });
 
 Router.map(function() {
-  this.route('first', {
+  this.route('main', {
     path: '/'
   });
 
-  this.route('second', {
-    path: '/second'
-  });
-
-  this.route('third', {
-    path: '/third'
-  });
+  this.route('segmented-article');
+  this.route('select-article');
+  this.route('deletable-article');
+  this.route('popup-article');
+  this.route('popover-article');
+  this.route('sheet-article');
+  this.route('paging-article');
 });
