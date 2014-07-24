@@ -1,8 +1,8 @@
-UI.registerHelper('OtherPage', function() {
-  var prev = Session.get('previousComponent');
+// UI.registerHelper('OtherPage', function() {
+//   var prev = Session.get('previousComponent');
 
-  debugger
+//   debugger
 
-  return null;
-  return prev || null;
-});
+//   return null;
+//   return prev || null;
+// });

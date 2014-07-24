@@ -5,6 +5,8 @@ Package.describe({
 Package.on_use(function(api, where) {
   api.use([
     'jquery',
-    'chui-latest'
+    'chui-latest',
+    'reactive-dict',
+    'underscore'
   ], 'client');
 });

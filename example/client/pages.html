@@ -4,48 +4,46 @@
 </head>
 
 <template name="MasterLayout">
-  {{#RoutingHelper}}
-    {{> yield }}
-  {{/RoutingHelper}}
+  {{> yield }}
 </template>
 
 <template name="First">
-  <nav class="">
+  {{#CHUI_Nav}}
     <h1>First Page</h1>
-  </nav>
-  <article class="">
+  {{/CHUI_Nav}}
+  {{#CHUI_Article}}
     <section>
       <ul class='list'>
         <li data-goto="{{pathFor 'second'}}" class="nav"><a>Second</a></li>
       </ul>
     </section>
-  </article>
+  {{/CHUI_Article}}
 </template>
 
 <template name="Second">
-  <nav class="">
+  {{#CHUI_Nav}}
     <a data-back="{{pathFor 'first'}}" class='button back'>First</a>
     <h1>Second Page</h1>
-  </nav>
-  <article class="">
+  {{/CHUI_Nav}}
+  {{#CHUI_Article}}
     <section>
       <ul class='list'>
         <li data-goto="{{pathFor 'third'}}" class="nav"><a>Third</a></li>
       </ul>
     </section>
-  </article>
+  {{/CHUI_Article}}
 </template>
 
 <template name="Third">
-  <nav class="">
+  {{#CHUI_Nav}}
     <a data-back="{{pathFor 'second'}}" class='button back'>Second</a>
     <h1>Third Page</h1>
-  </nav>
-  <article class="">
+  {{/CHUI_Nav}}
+  {{#CHUI_Article}}
     <section>
       <ul class='list'>
         <li data-goto="{{pathFor 'first'}}" class="nav"><a>First</a></li>
       </ul>
     </section>
-  </article>
+  {{/CHUI_Article}}
 </template>
